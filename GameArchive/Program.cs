@@ -55,8 +55,7 @@ static void WriteAllToConsole(IReadRepository<IEntity> repository)
 
 while (true)
 {
-    Console.WriteLine("Welcome to game archive application!\n\nPlease tell me what you want to do?");
-    Console.WriteLine("\nChoose action:\n1 => Add game\n2 => Display game\n3 => Display all games\n4 => Remove Game\nTo quit press Q");
+    Console.WriteLine("\nChoose game type:\n1 => Video Game, 2 => Board Game\nTo quit press Q");
     Console.WriteLine();
     var input = Console.ReadLine();
 
@@ -65,8 +64,8 @@ while (true)
         break;
     }
 
-    
-    Console.WriteLine("\nChoose game type:\nA => Video Game, B => Board Game\nTo quit press Q");
+    Console.WriteLine("Welcome to game archive application!\n\nPlease tell me what you want to do?");
+    Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game\nTo quit press Q");
     Console.WriteLine();
     var input2 = Console.ReadLine();
 
@@ -75,23 +74,12 @@ while (true)
         break;
     }
 
+    GameArchiveLogic gameLogic = new GameArchiveLogic();
+
+    
     try
     {
-        Console.WriteLine("Insert name");
-        var gameName = Console.ReadLine();
-        Console.WriteLine("Insert category");
-        var gameCategory = Console.ReadLine();
-        Console.WriteLine("Insert publication year");
-        var gamePublicationYear = archiveLogic.ConvertStringToInteger(Console.ReadLine());
-        Console.WriteLine("Insert producer");
-        var gameProducer = Console.ReadLine();
-        Console.WriteLine("Insert if there is online option");
-        var gameOnlineOption = archiveLogic.ConvertStringToBoolean(Console.ReadLine());
-
-
-        VideoGame videoGame = new VideoGame { Name = gameName, Category = gameCategory, PublicationYear = gamePublicationYear, Producer = gameProducer, OnlineOption = gameOnlineOption };
-
-        videoGameRepository2.AddGame(videoGame);
+        gameLogic.ChooseActionAndRepository(input, input2);
     }
     catch (Exception e)
     {
