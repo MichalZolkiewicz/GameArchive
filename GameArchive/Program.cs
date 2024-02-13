@@ -64,22 +64,11 @@ while (true)
         break;
     }
 
-    Console.WriteLine("Welcome to game archive application!\n\nPlease tell me what you want to do?");
-    Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game\nTo quit press Q");
-    Console.WriteLine();
-    var input2 = Console.ReadLine();
-
-    if (input2 == "q" || input2 == "Q")
-    {
-        break;
-    }
-
     GameArchiveLogic gameLogic = new GameArchiveLogic();
 
-    
     try
     {
-        gameLogic.ChooseActionAndRepository(input, input2);
+        gameLogic.ChooseActionAndRepository(input);
     }
     catch (Exception e)
     {
