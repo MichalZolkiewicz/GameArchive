@@ -2,70 +2,41 @@
 using GameArchive.Entities;
 using GameArchive.Repositories;
 using GameArchive.Repositories.Extensions;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace GameArchive.Logic;
 
 public class GameArchiveLogic
 {
+    static VideoGameLogic videoGameLogic = new VideoGameLogic();
+    static BoardGameLogic boardGameLogic = new BoardGameLogic();
     SqlRepository<VideoGame> videoGameRepository = new SqlRepository<VideoGame>(new GameArchiveDbContext());
 
-    SqlRepository<BoardGame> boardGameRepository = new SqlRepository<BoardGame>(new GameArchiveDbContext());
-
-    public SqlRepository<VideoGame> GetVideoGameRepository()
+    public void ChooseActionAndRepository(string typeInput)
     {
-        return videoGameRepository;
-    }
-
-    public SqlRepository<BoardGame> GetBoardGameRepository()
-    {
-        return boardGameRepository;
-    }
-
-    public void ChooseActionAndRepository(string typeInput, string actionInput)
-    {
-        if(typeInput == "1")
+        if (typeInput == "1")
         {
-            switch(actionInput)
+            Console.WriteLine("Welcome to game archive application!\n\nPlease tell me what you want to do?");
+            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game\nTo quit press Q");
+            Console.WriteLine();
+            var input2 = Console.ReadLine();
+
+            switch (input2)
             {
                 case "A":
                 case "a":
-                    Console.WriteLine("Insert name");
-                    var gameName = Console.ReadLine();
-                    Console.WriteLine("Insert category");
-                    var gameCategory = Console.ReadLine();
-                    Console.WriteLine("Insert publication year");
-                    var gamePublicationYear = ConvertStringToInteger(Console.ReadLine());
-                    Console.WriteLine("Insert producer");
-                    var gameProducer = Console.ReadLine();
-                    Console.WriteLine("Insert if there is online option");
-                    var gameOnlineOption = ConvertStringToBoolean(Console.ReadLine());
-                    VideoGame videoGame = new VideoGame { Name = gameName, Category = gameCategory, PublicationYear = gamePublicationYear, Producer = gameProducer, OnlineOption = gameOnlineOption };
-
-                    videoGameRepository.AddGame(videoGame);
+                    videoGameLogic.AddVideoGame();
                     break;
                 case "B":
                 case "b":
-                    Console.WriteLine("Insert game ID");
-                    var gameId = ConvertStringToInteger(Console.ReadLine());
-                    VideoGame videoGame1 = videoGameRepository.FindGamebyId(gameId);
-                    Console.WriteLine(videoGame1.Name);
+                    videoGameLogic.DisplayVideoGameById();
                     break;
                 case "C": 
                 case "c":
-                    var videoGames = videoGameRepository.GetAll();
-                    foreach(var videoGame2 in videoGames)
-                    {
-                        Console.WriteLine(videoGame2);
-                        Console.WriteLine();
-                    }
+                    videoGameLogic.DisplayAllVideoGames();
                     break;
                 case "D":
                 case "d":
-                    Console.WriteLine("Insert game ID");
-                    var gameId1 = ConvertStringToInteger(Console.ReadLine());
-                    VideoGame videoGame3 = videoGameRepository.FindGamebyId(gameId1);
-                    videoGameRepository.RemoveGame(videoGame3);
+                    videoGameLogic.RemoveVideoGame();
                     break;
                 default:
                     throw new Exception("Wrong letter!");
@@ -73,46 +44,27 @@ public class GameArchiveLogic
         }
         else if(typeInput == "2")
         {
-            switch(actionInput)
+            Console.WriteLine("Welcome to game archive application!\n\nPlease tell me what you want to do?");
+            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game\nTo quit press Q");
+            Console.WriteLine();
+            var input2 = Console.ReadLine();
+            switch (input2)
             {
                 case "A":
                 case "a":
-                    Console.WriteLine("Insert name");
-                    var gameName = Console.ReadLine();
-                    Console.WriteLine("Insert category");
-                    var gameCategory = Console.ReadLine();
-                    Console.WriteLine("Insert publication year");
-                    var gamePublicationYear = ConvertStringToInteger(Console.ReadLine());
-                    Console.WriteLine("Insert producer");
-                    var gameProducer = Console.ReadLine();
-                    Console.WriteLine("Insert maximum amount of players");
-                    var maxPlayers = ConvertStringToInteger(Console.ReadLine());
-                    BoardGame boardGame = new BoardGame { Name = gameName, Category = gameCategory, PublicationYear = gamePublicationYear, Producer = gameProducer, MaxPlayers = maxPlayers };
-
-                    boardGameRepository.AddGame(boardGame);
+                    boardGameLogic.AddBoardGame();
                     break;
                 case "B":
                 case "b":
-                    Console.WriteLine("Insert game ID");
-                    var gameId = ConvertStringToInteger(Console.ReadLine());
-                    BoardGame boardGame1 = boardGameRepository.FindGamebyId(gameId);
-                    Console.WriteLine(boardGame1.Name);
+                    boardGameLogic.DisplayBoardGameById();
                     break;
                 case "C":
                 case "c":
-                    var boardGames = boardGameRepository.GetAll();
-                    foreach (var boardGame2 in boardGames)
-                    {
-                        Console.WriteLine(boardGame2);
-                        Console.WriteLine();
-                    }
+                    boardGameLogic.DisplayAllBoardGames();
                     break;
                 case "D":
                 case "d":
-                    Console.WriteLine("Insert game ID");
-                    var gameId1 = ConvertStringToInteger(Console.ReadLine());
-                    BoardGame boardGame3 = boardGameRepository.FindGamebyId(gameId1);
-                    boardGameRepository.RemoveGame(boardGame3);
+                    boardGameLogic.RemoveBoardGame();
                     break;
                 default:
                     throw new Exception("Wrong letter!");
@@ -121,34 +73,6 @@ public class GameArchiveLogic
         else
         {
             throw new Exception("Wrong number!");
-        }
-    }
-    
-    public Boolean ConvertStringToBoolean(string input)
-    {
-        if(input == "yes")
-        {
-            return true;
-        }
-        else if(input == "no")
-        {
-            return false;
-        }
-        else
-        {
-            throw new Exception("Incorrect wording!");
-        }
-    }
-
-    public int ConvertStringToInteger(string input)
-    {
-        if(int.TryParse(input, out int result))
-        {
-            return result;
-        }
-        else
-        {
-            throw new Exception("String is not a integer!");
         }
     }
 }
