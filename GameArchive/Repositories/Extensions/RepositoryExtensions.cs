@@ -19,11 +19,11 @@ public static class RepositoryExtensions
     }
 
     
-    public static void FindGamebyId<T>(this IRepository<T> repository, T item)
+    public static T FindGamebyId<T>(this IRepository<T> repository, int id)
     where T : class, IEntity
     {
-        repository.GetById(item.Id);
-        repository.Save();
+        T game = repository.GetById(id);
+        return game;
     }
 
     public static void GetAllGames<T>(this IRepository<T> repository)
