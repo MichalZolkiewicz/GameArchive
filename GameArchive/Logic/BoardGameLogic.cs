@@ -23,7 +23,8 @@ internal class BoardGameLogic
         var maxPlayers = ConvertStringToInteger(Console.ReadLine());
         BoardGame boardGame = new BoardGame { Name = gameName, Category = gameCategory, PublicationYear = gamePublicationYear, Producer = gameProducer, MaxPlayers = maxPlayers };
 
-        boardGameRepository.AddGame(boardGame);
+        boardGameRepository.Add(boardGame);
+        boardGameRepository.Save();
     }
 
     public void DisplayBoardGameById()
@@ -49,7 +50,8 @@ internal class BoardGameLogic
         Console.WriteLine("Insert game ID");
         var gameId = ConvertStringToInteger(Console.ReadLine());
         BoardGame boardGame = boardGameRepository.FindGameById(gameId);
-        boardGameRepository.RemoveGame(boardGame);
+        boardGameRepository.Remove(boardGame);
+        boardGameRepository.Save();
     }
     public Boolean ConvertStringToBoolean(string input)
     {

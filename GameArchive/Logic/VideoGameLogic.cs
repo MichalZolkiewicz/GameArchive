@@ -23,7 +23,8 @@ internal class VideoGameLogic
         var gameOnlineOption = ConvertStringToBoolean(Console.ReadLine());
         VideoGame videoGame = new VideoGame { Name = gameName, Category = gameCategory, PublicationYear = gamePublicationYear, Producer = gameProducer, OnlineOption = gameOnlineOption };
 
-        videoGameRepository.AddGame(videoGame);
+        videoGameRepository.Add(videoGame);
+        videoGameRepository.Save();
     }
 
     public void DisplayVideoGameById()
@@ -49,7 +50,8 @@ internal class VideoGameLogic
         Console.WriteLine("Insert game ID");
         var gameId = ConvertStringToInteger(Console.ReadLine());
         VideoGame videoGame = videoGameRepository.FindGameById(gameId);
-        videoGameRepository.RemoveGame(videoGame);
+        videoGameRepository.Remove(videoGame);
+        videoGameRepository.Save();
     }
     public Boolean ConvertStringToBoolean(string input)
     {

@@ -1,15 +1,9 @@
-﻿using GameArchive.Data;
-using GameArchive.Entities;
-using GameArchive.Repositories;
-using GameArchive.Repositories.Extensions;
-
-namespace GameArchive.Logic;
+﻿namespace GameArchive.Logic;
 
 public class GameArchiveLogic
 {
     static VideoGameLogic videoGameLogic = new VideoGameLogic();
     static BoardGameLogic boardGameLogic = new BoardGameLogic();
-    SqlRepository<VideoGame> videoGameRepository = new SqlRepository<VideoGame>(new GameArchiveDbContext());
 
     public void ChooseActionAndRepository(string typeInput)
     {
