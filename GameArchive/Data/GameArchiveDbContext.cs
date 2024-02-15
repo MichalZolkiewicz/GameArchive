@@ -1,7 +1,6 @@
 ﻿namespace GameArchive.Data;
 
 using GameArchive.Entities;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 public class GameArchiveDbContext : DbContext
