@@ -4,7 +4,6 @@ public class GameArchiveLogic
 {
     static VideoGameLogic videoGameLogic = new VideoGameLogic();
     static BoardGameLogic boardGameLogic = new BoardGameLogic();
-
     public void ChooseActionAndRepository(string typeInput)
     {
         if (typeInput == "1")
