@@ -1,14 +1,12 @@
 ﻿using GameArchive.Data;
 using GameArchive.Entities;
 using GameArchive.Repositories;
-using GameArchive.Repositories.Extensions;
 
 namespace GameArchive.Logic;
 
 internal class VideoGameLogic
 {
     SqlRepository<VideoGame> videoGameRepository = new SqlRepository<VideoGame>(new GameArchiveDbContext());
-
     public void AddVideoGame()
     {
         Console.WriteLine("Insert name");
@@ -23,6 +21,7 @@ internal class VideoGameLogic
         var gameOnlineOption = ConvertStringToBoolean(Console.ReadLine());
         VideoGame videoGame = new VideoGame { Name = gameName, Category = gameCategory, PublicationYear = gamePublicationYear, Producer = gameProducer, OnlineOption = gameOnlineOption };
 
+        videoGameRepository.ItemAdded += EventLoggerLogic.GameRepositoryOnItemAdded;
         videoGameRepository.Add(videoGame);
         videoGameRepository.Save();
     }
@@ -31,7 +30,7 @@ internal class VideoGameLogic
     {
         Console.WriteLine("Insert game ID");
         var gameId = ConvertStringToInteger(Console.ReadLine());
-        VideoGame videoGame = videoGameRepository.FindGameById(gameId);
+        VideoGame videoGame = videoGameRepository.GetById(gameId);
         Console.WriteLine(videoGame.Name);
     }
 
@@ -49,7 +48,8 @@ internal class VideoGameLogic
     {
         Console.WriteLine("Insert game ID");
         var gameId = ConvertStringToInteger(Console.ReadLine());
-        VideoGame videoGame = videoGameRepository.FindGameById(gameId);
+        VideoGame videoGame = videoGameRepository.GetById(gameId);
+        videoGameRepository.ItemRemoved += EventLoggerLogic.GameRepositoryOnItemRemoved;
         videoGameRepository.Remove(videoGame);
         videoGameRepository.Save();
     }

@@ -1,7 +1,6 @@
 ﻿using GameArchive.Data;
 using GameArchive.Entities;
 using GameArchive.Repositories;
-using GameArchive.Repositories.Extensions;
 
 namespace GameArchive.Logic;
 
@@ -23,6 +22,7 @@ internal class BoardGameLogic
         var maxPlayers = ConvertStringToInteger(Console.ReadLine());
         BoardGame boardGame = new BoardGame { Name = gameName, Category = gameCategory, PublicationYear = gamePublicationYear, Producer = gameProducer, MaxPlayers = maxPlayers };
 
+        boardGameRepository.ItemAdded += EventLoggerLogic.GameRepositoryOnItemAdded;
         boardGameRepository.Add(boardGame);
         boardGameRepository.Save();
     }
@@ -31,7 +31,7 @@ internal class BoardGameLogic
     {
         Console.WriteLine("Insert game ID");
         var gameId = ConvertStringToInteger(Console.ReadLine());
-        BoardGame boardGame = boardGameRepository.FindGameById(gameId);
+        BoardGame boardGame = boardGameRepository.GetById(gameId);
         Console.WriteLine(boardGame.Name);
     }
 
@@ -49,7 +49,8 @@ internal class BoardGameLogic
     {
         Console.WriteLine("Insert game ID");
         var gameId = ConvertStringToInteger(Console.ReadLine());
-        BoardGame boardGame = boardGameRepository.FindGameById(gameId);
+        BoardGame boardGame = boardGameRepository.GetById(gameId);
+        boardGameRepository.ItemRemoved += EventLoggerLogic.GameRepositoryOnItemRemoved;
         boardGameRepository.Remove(boardGame);
         boardGameRepository.Save();
     }
