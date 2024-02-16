@@ -1,6 +1,6 @@
-﻿using GameArchive.Entities;
+﻿using GameArchive.Data.Entities;
 
-namespace GameArchive.Repositories;
+namespace GameArchive.Data.Repositories;
 
 public class ListRepository<T> : IRepository<T>
     where T : class, IEntity, new()

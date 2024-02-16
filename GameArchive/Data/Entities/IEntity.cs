@@ -1,4 +1,4 @@
-﻿namespace GameArchive.Entities;
+﻿namespace GameArchive.Data.Entities;
 
 public interface IEntity
 {

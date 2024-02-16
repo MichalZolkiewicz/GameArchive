@@ -1,6 +1,6 @@
 ﻿using GameArchive.Data;
-using GameArchive.Entities;
-using GameArchive.Repositories;
+using GameArchive.Data.Entities;
+using GameArchive.Data.Repositories;
 
 namespace GameArchive.Logic;
 

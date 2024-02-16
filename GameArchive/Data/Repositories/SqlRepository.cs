@@ -1,7 +1,7 @@
-﻿using GameArchive.Entities;
+﻿using GameArchive.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace GameArchive.Repositories;
+namespace GameArchive.Data.Repositories;
 
 public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
 {
@@ -36,7 +36,7 @@ public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
     public void Remove(T item)
     {
         _dbSet.Remove(item);
-        ItemRemoved?.Invoke(this, item);    
+        ItemRemoved?.Invoke(this, item);
     }
 
     public void Save()

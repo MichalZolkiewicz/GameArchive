@@ -1,4 +1,4 @@
-﻿namespace GameArchive.Entities;
+﻿namespace GameArchive.Data.Entities;
 public class BoardGame : EntityBase
 {
     public string? Name { get; set; }

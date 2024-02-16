@@ -1,7 +1,7 @@
-﻿namespace GameArchive.Entities;
+﻿namespace GameArchive.Data.Entities;
 
 public abstract class EntityBase : IEntity
 {
     public int Id { get; set; }
-    
+
 }
