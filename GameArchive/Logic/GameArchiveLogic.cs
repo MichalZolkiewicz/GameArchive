@@ -9,9 +9,10 @@ public class GameArchiveLogic
         if (typeInput == "1")
         {
             Console.WriteLine("Welcome to game archive application!\n\nPlease tell me what you want to do?");
-            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game\nTo quit press Q");
+            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game");
             Console.WriteLine();
             var input2 = Console.ReadLine();
+
 
             switch (input2)
             {
@@ -38,7 +39,7 @@ public class GameArchiveLogic
         else if(typeInput == "2")
         {
             Console.WriteLine("Welcome to game archive application!\n\nPlease tell me what you want to do?");
-            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game\nTo quit press Q");
+            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game");
             Console.WriteLine();
             var input2 = Console.ReadLine();
             switch (input2)
