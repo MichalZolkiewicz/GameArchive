@@ -1,24 +1,23 @@
-﻿using GameArchive.Logic;
+﻿using GameArchive;
+using GameArchive.Data;
+using GameArchive.Data.DataProvider;
+using GameArchive.Data.Entities;
+using GameArchive.Data.Repositories;
+using GameArchive.UserCommuniation;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
-while (true)
-{
-    Console.WriteLine("\nChoose game type:\n1 => Video Game, 2 => Board Game\nTo quit press Q");
-    Console.WriteLine();
-    var input = Console.ReadLine();
+var services = new ServiceCollection();
+services.AddSingleton<IApp, App>();
+services.AddSingleton<DbContext, GameArchiveDbContext>();
+services.AddSingleton<IUserCommunication, UserCommunication>();
+services.AddSingleton<IRepository<VideoGame>, SqlRepository<VideoGame>>();
+services.AddSingleton<IRepository<BoardGame>, SqlRepository<BoardGame>>();
+services.AddSingleton<IGameProvider<VideoGame>, VideoGameProvider>();
+services.AddSingleton<IGameProvider<BoardGame>, BoardGameProvider>();
 
-    if (input == "q" || input == "Q")
-    {
-        break;
-    }
 
-    GameArchiveLogic gameLogic = new GameArchiveLogic();
+var serviceProvider = services.BuildServiceProvider();
+var app = serviceProvider.GetService<IApp>()!;
 
-    try
-    {
-        gameLogic.ChooseActionAndRepository(input);
-    }
-    catch (Exception e)
-    {
-        Console.WriteLine($"Exception catched: {e.Message}");
-    }    
-}
+app.Run();
