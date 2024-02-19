@@ -4,7 +4,7 @@ using GameArchive.Data.Repositories;
 
 namespace GameArchive.Logic;
 
-internal class BoardGameLogic
+public class BoardGameLogic
 {
     SqlRepository<BoardGame> boardGameRepository = new SqlRepository<BoardGame>(new GameArchiveDbContext());
 

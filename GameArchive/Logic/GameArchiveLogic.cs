@@ -1,15 +1,28 @@
-﻿namespace GameArchive.Logic;
+﻿using GameArchive.Data.DataProvider;
+using GameArchive.Data.Entities;
+using System.Collections.Concurrent;
+
+namespace GameArchive.Logic;
 
 public class GameArchiveLogic
 {
-    static VideoGameLogic videoGameLogic = new VideoGameLogic();
-    static BoardGameLogic boardGameLogic = new BoardGameLogic();
+    private readonly VideoGameLogic videoGameLogic = new VideoGameLogic();
+    private readonly BoardGameLogic boardGameLogic = new BoardGameLogic();
+
+    private readonly IGameProvider<VideoGame> _videoGameProvider;
+    private readonly IGameProvider<BoardGame> _boardGameProvider;
+
+    public GameArchiveLogic(IGameProvider<VideoGame> videoGameProvider, IGameProvider<BoardGame> boardGameProvider )
+    {
+        _videoGameProvider = videoGameProvider;
+        _boardGameProvider = boardGameProvider;
+    }
     public void ChooseActionAndRepository(string typeInput)
     {
         if (typeInput == "1")
         {
-            Console.WriteLine("Welcome to game archive application!\n\nPlease tell me what you want to do?");
-            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game");
+            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game" +
+                              "\nE => Show earliest produced game\nF => Show unique producers\nG => Order by name\nH => Filter by category name");
             Console.WriteLine();
             var input2 = Console.ReadLine();
 
@@ -32,14 +45,40 @@ public class GameArchiveLogic
                 case "d":
                     videoGameLogic.RemoveVideoGame();
                     break;
+                case "E":
+                case "e":                    
+                    Console.WriteLine(_videoGameProvider.GetTheEarliestProducedGame());
+                    break;
+                case "F":
+                case "f":                    
+                    foreach(var producer in _videoGameProvider.GetUniqueGameProducer())
+                    {
+                        Console.WriteLine(producer);
+                    }
+                    break;
+                case "G":
+                case "g":
+                    foreach (var game in _videoGameProvider.OrderByName())
+                    {
+                        Console.WriteLine(game);
+                    }
+                    break;
+                case "H":
+                case "h":
+                    string category = Console.ReadLine();
+                    foreach (var game in _videoGameProvider.WhereCategoryIs(category))
+                    {
+                        Console.WriteLine(game);
+                    }
+                    break;
                 default:
                     throw new Exception("Wrong letter!");
             }
         }
         else if(typeInput == "2")
         {
-            Console.WriteLine("Welcome to game archive application!\n\nPlease tell me what you want to do?");
-            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game");
+            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game" +
+                "\nE => Show earliest produced game\nF => Show unique producers\nG => Order by name\nH => Filter by category name");
             Console.WriteLine();
             var input2 = Console.ReadLine();
             switch (input2)
@@ -59,6 +98,32 @@ public class GameArchiveLogic
                 case "D":
                 case "d":
                     boardGameLogic.RemoveBoardGame();
+                    break;
+                case "E":
+                case "e":                   
+                    Console.WriteLine(_boardGameProvider.GetTheEarliestProducedGame());
+                    break;
+                case "F":
+                case "f":
+                    foreach (var producer in _boardGameProvider.GetUniqueGameProducer())
+                    {
+                        Console.WriteLine(producer);
+                    }
+                    break;
+                case "G":
+                case "g":
+                    foreach (var game in _boardGameProvider.OrderByName())
+                    {
+                        Console.WriteLine(game);
+                    }
+                    break;
+                case "H":
+                case "h":
+                    string category = Console.ReadLine();
+                    foreach (var game in _boardGameProvider.WhereCategoryIs(category))
+                    {
+                        Console.WriteLine(game);
+                    }
                     break;
                 default:
                     throw new Exception("Wrong letter!");

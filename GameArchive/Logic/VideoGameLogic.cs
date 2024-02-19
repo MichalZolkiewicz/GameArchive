@@ -4,7 +4,7 @@ using GameArchive.Data.Repositories;
 
 namespace GameArchive.Logic;
 
-internal class VideoGameLogic
+public class VideoGameLogic
 {
     SqlRepository<VideoGame> videoGameRepository = new SqlRepository<VideoGame>(new GameArchiveDbContext());
     public void AddVideoGame()
