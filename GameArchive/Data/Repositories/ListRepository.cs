@@ -8,6 +8,8 @@ public class ListRepository<T> : IRepository<T>
 {
     protected readonly List<T> _items = new();
 
+    public event EventHandler<T>? ItemAdded;
+    public event EventHandler<T>? ItemRemoved;
     public IEnumerable<T> GetAll()
     {
         return _items.ToList();
