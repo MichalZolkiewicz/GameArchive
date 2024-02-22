@@ -1,21 +1,23 @@
 ﻿using GameArchive.Data.DataProvider;
 using GameArchive.Data.Entities;
-using System.Collections.Concurrent;
 
 namespace GameArchive.Logic;
 
-public class GameArchiveLogic
+public class GameArchiveLogic : IGameArchiveLogic
 {
-    private readonly VideoGameLogic videoGameLogic = new VideoGameLogic();
-    private readonly BoardGameLogic boardGameLogic = new BoardGameLogic();
+    private readonly IGameLogic<VideoGame> _videoGameLogic;
+    private readonly IGameLogic<BoardGame> _boardGameLogic;
 
     private readonly IGameProvider<VideoGame> _videoGameProvider;
     private readonly IGameProvider<BoardGame> _boardGameProvider;
 
-    public GameArchiveLogic(IGameProvider<VideoGame> videoGameProvider, IGameProvider<BoardGame> boardGameProvider )
+    public GameArchiveLogic(IGameProvider<VideoGame> videoGameProvider, IGameProvider<BoardGame> boardGameProvider,
+        IGameLogic<VideoGame> videoGameLogic, IGameLogic<BoardGame> boardGameLogic)
     {
         _videoGameProvider = videoGameProvider;
         _boardGameProvider = boardGameProvider;
+        _videoGameLogic = videoGameLogic;
+        _boardGameLogic = boardGameLogic;
     }
     public void ChooseActionAndRepository(string typeInput)
     {
@@ -31,19 +33,19 @@ public class GameArchiveLogic
             {
                 case "A":
                 case "a":
-                    videoGameLogic.AddVideoGame();
+                    _videoGameLogic.AddGame();
                     break;
                 case "B":
                 case "b":
-                    videoGameLogic.DisplayVideoGameById();
+                    _videoGameLogic.DisplayGameById();
                     break;
                 case "C": 
                 case "c":
-                    videoGameLogic.DisplayAllVideoGames();
+                    _videoGameLogic.DisplayAllGames();
                     break;
                 case "D":
                 case "d":
-                    videoGameLogic.RemoveVideoGame();
+                    _videoGameLogic.RemoveGame();
                     break;
                 case "E":
                 case "e":                    
@@ -85,19 +87,19 @@ public class GameArchiveLogic
             {
                 case "A":
                 case "a":
-                    boardGameLogic.AddBoardGame();
+                    _boardGameLogic.AddGame();
                     break;
                 case "B":
                 case "b":
-                    boardGameLogic.DisplayBoardGameById();
+                    _boardGameLogic.DisplayGameById();
                     break;
                 case "C":
                 case "c":
-                    boardGameLogic.DisplayAllBoardGames();
+                    _boardGameLogic.DisplayAllGames();
                     break;
                 case "D":
                 case "d":
-                    boardGameLogic.RemoveBoardGame();
+                    _boardGameLogic.RemoveGame();
                     break;
                 case "E":
                 case "e":                   
@@ -135,3 +137,4 @@ public class GameArchiveLogic
         }
     }
 }
+               

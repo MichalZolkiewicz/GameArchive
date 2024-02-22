@@ -1,13 +1,20 @@
-﻿using GameArchive.Data;
-using GameArchive.Data.Entities;
+﻿using GameArchive.Data.Entities;
 using GameArchive.Data.Repositories;
 
 namespace GameArchive.Logic;
 
-public class VideoGameLogic
+public class VideoGameLogic<T> : IGameLogic <T> where T : class
 {
-    SqlRepository<VideoGame> videoGameRepository = new SqlRepository<VideoGame>(new GameArchiveDbContext());
-    public void AddVideoGame()
+    private readonly IRepository<VideoGame> _videoGameRepository;
+    private readonly IEventLoggerLogic _eventLoggerLogic;
+
+    public VideoGameLogic(IRepository<VideoGame> videoGameRepository, IEventLoggerLogic eventLoggerLogic)
+    {
+        _videoGameRepository = videoGameRepository;
+        _eventLoggerLogic = eventLoggerLogic;
+    }
+
+    public void AddGame()
     {
         Console.WriteLine("Insert name");
         var gameName = Console.ReadLine();
@@ -21,22 +28,22 @@ public class VideoGameLogic
         var gameOnlineOption = ConvertStringToBoolean(Console.ReadLine());
         VideoGame videoGame = new VideoGame { Name = gameName, Category = gameCategory, PublicationYear = gamePublicationYear, Producer = gameProducer, OnlineOption = gameOnlineOption };
 
-        videoGameRepository.ItemAdded += EventLoggerLogic.GameRepositoryOnItemAdded;
-        videoGameRepository.Add(videoGame);
-        videoGameRepository.Save();
+        _videoGameRepository.ItemAdded += _eventLoggerLogic.GameRepositoryOnItemAdded;
+        _videoGameRepository.Add(videoGame);
+        _videoGameRepository.Save();
     }
 
-    public void DisplayVideoGameById()
+    public void DisplayGameById()
     {
         Console.WriteLine("Insert game ID");
         var gameId = ConvertStringToInteger(Console.ReadLine());
-        VideoGame videoGame = videoGameRepository.GetById(gameId);
+        VideoGame videoGame = _videoGameRepository.GetById(gameId);
         Console.WriteLine(videoGame.Name);
     }
 
-    public void DisplayAllVideoGames()
+    public void DisplayAllGames()
     {
-        var videoGames = videoGameRepository.GetAll();
+        var videoGames = _videoGameRepository.GetAll();
         foreach (var videoGame in videoGames)
         {
             Console.WriteLine(videoGame);
@@ -44,14 +51,14 @@ public class VideoGameLogic
         }
     }
 
-    public void RemoveVideoGame()
+    public void RemoveGame()
     {
         Console.WriteLine("Insert game ID");
         var gameId = ConvertStringToInteger(Console.ReadLine());
-        VideoGame videoGame = videoGameRepository.GetById(gameId);
-        videoGameRepository.ItemRemoved += EventLoggerLogic.GameRepositoryOnItemRemoved;
-        videoGameRepository.Remove(videoGame);
-        videoGameRepository.Save();
+        VideoGame videoGame = _videoGameRepository.GetById(gameId);
+        //_videoGameRepository.ItemRemoved += EventLoggerLogic.GameRepositoryOnItemRemoved;
+        _videoGameRepository.Remove(videoGame);
+        _videoGameRepository.Save();
     }
     public Boolean ConvertStringToBoolean(string input)
     {

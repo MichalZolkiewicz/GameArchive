@@ -1,14 +1,20 @@
-﻿using GameArchive.Data;
-using GameArchive.Data.Entities;
+﻿using GameArchive.Data.Entities;
 using GameArchive.Data.Repositories;
 
 namespace GameArchive.Logic;
 
-public class BoardGameLogic
+public class BoardGameLogic<T> : IGameLogic <T> where T : class
 {
-    SqlRepository<BoardGame> boardGameRepository = new SqlRepository<BoardGame>(new GameArchiveDbContext());
+    private readonly IRepository<BoardGame> _boardGameRepository;
+    private readonly IEventLoggerLogic _eventLoggerLogic;
 
-    public void AddBoardGame()
+    public BoardGameLogic(IRepository<BoardGame> boardGameRepository, IEventLoggerLogic eventLoggerLogic)
+    {
+        _boardGameRepository = boardGameRepository;
+        _eventLoggerLogic = eventLoggerLogic;
+    }
+
+    public void AddGame()
     {
         Console.WriteLine("Insert name");
         var gameName = Console.ReadLine();
@@ -22,22 +28,22 @@ public class BoardGameLogic
         var maxPlayers = ConvertStringToInteger(Console.ReadLine());
         BoardGame boardGame = new BoardGame { Name = gameName, Category = gameCategory, PublicationYear = gamePublicationYear, Producer = gameProducer, MaxPlayers = maxPlayers };
 
-        boardGameRepository.ItemAdded += EventLoggerLogic.GameRepositoryOnItemAdded;
-        boardGameRepository.Add(boardGame);
-        boardGameRepository.Save();
+        _boardGameRepository.ItemAdded += _eventLoggerLogic.GameRepositoryOnItemAdded;
+        _boardGameRepository.Add(boardGame);
+        _boardGameRepository.Save();
     }
 
-    public void DisplayBoardGameById()
+    public void DisplayGameById()
     {
         Console.WriteLine("Insert game ID");
         var gameId = ConvertStringToInteger(Console.ReadLine());
-        BoardGame boardGame = boardGameRepository.GetById(gameId);
+        BoardGame boardGame = _boardGameRepository.GetById(gameId);
         Console.WriteLine(boardGame.Name);
     }
 
-    public void DisplayAllBoardGames()
+    public void DisplayAllGames()
     {
-        var boardGames = boardGameRepository.GetAll();
+        var boardGames = _boardGameRepository.GetAll();
         foreach (var boardGame in boardGames)
         {
             Console.WriteLine(boardGame);
@@ -45,14 +51,14 @@ public class BoardGameLogic
         }
     }
 
-    public void RemoveBoardGame()
+    public void RemoveGame()
     {
         Console.WriteLine("Insert game ID");
         var gameId = ConvertStringToInteger(Console.ReadLine());
-        BoardGame boardGame = boardGameRepository.GetById(gameId);
-        boardGameRepository.ItemRemoved += EventLoggerLogic.GameRepositoryOnItemRemoved;
-        boardGameRepository.Remove(boardGame);
-        boardGameRepository.Save();
+        BoardGame boardGame = _boardGameRepository.GetById(gameId);
+        _boardGameRepository.ItemRemoved += _eventLoggerLogic.GameRepositoryOnItemRemoved;
+        _boardGameRepository.Remove(boardGame);
+        _boardGameRepository.Save();
     }
     public Boolean ConvertStringToBoolean(string input)
     {

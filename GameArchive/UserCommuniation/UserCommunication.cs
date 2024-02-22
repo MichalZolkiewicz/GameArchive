@@ -6,13 +6,11 @@ namespace GameArchive.UserCommuniation;
 
 public class UserCommunication : IUserCommunication
 {
-    private readonly IGameProvider<VideoGame> _videoGameProvider;
-    private readonly IGameProvider<BoardGame> _boardGameProvider;
+    private readonly IGameArchiveLogic _gameArchiveLogic;
 
-    public UserCommunication(IGameProvider<VideoGame> videoGameProvider, IGameProvider<BoardGame> boardGameProvider)
+    public UserCommunication(IGameArchiveLogic gameArchiveLogic)
     {
-        _videoGameProvider = videoGameProvider;
-        _boardGameProvider = boardGameProvider; 
+        _gameArchiveLogic = gameArchiveLogic;
     }
     public void RunApp()
     {
@@ -28,11 +26,9 @@ public class UserCommunication : IUserCommunication
                 break;
             }
 
-            GameArchiveLogic gameLogic = new GameArchiveLogic(_videoGameProvider, _boardGameProvider);
-
             try
             {
-                gameLogic.ChooseActionAndRepository(input);
+                _gameArchiveLogic.ChooseActionAndRepository(input);
             }
             catch (Exception e)
             {

@@ -1,10 +1,10 @@
 ﻿namespace GameArchive.Logic;
 
-public class EventLoggerLogic
+public class EventLoggerLogic : IEventLoggerLogic
 {
     private const string eventLoggerFile = "eventLogger.txt";
 
-    public static void GameRepositoryOnItemAdded<T>(object? sender, T item)
+    public void GameRepositoryOnItemAdded<T>(object? sender, T item)
     {
         DateTime localDate = DateTime.Now;
         string eventLine = localDate.ToString() + "-" + item.GetType().Name + " added";
@@ -14,7 +14,7 @@ public class EventLoggerLogic
         }
     }
 
-    public static void GameRepositoryOnItemRemoved<T>(object? sender, T item)
+    public void GameRepositoryOnItemRemoved<T>(object? sender, T item)
     {
         DateTime localDate = DateTime.Now;
         string eventLine = localDate.ToString() + "-" + item.GetType().Name + " removed";
