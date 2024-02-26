@@ -51,6 +51,56 @@ public class VideoGameLogic<T> : IGameLogic <T> where T : class
         }
     }
 
+    public void UpdateVideoGame(string id)
+    {
+        
+        var videoGame = _videoGameRepository.GetById(this.ConvertStringToInteger(id));
+        Console.WriteLine("=========================================");
+        Console.WriteLine("What would you like to change?");
+        Console.WriteLine("\nA => Name\nB => Category\nC => Publication year\nD => Producer\nE => Online option");
+        var input = Console.ReadLine();
+        if (videoGame != null)
+        {
+            switch (input)
+            {
+                case "A":
+                case "a":
+                    Console.WriteLine("Insert new name");
+                    var name = Console.ReadLine();
+                    videoGame.Name = name;
+                    break;
+                case "B":
+                case "b":
+                    Console.WriteLine("Insert new category");
+                    var category = Console.ReadLine();
+                    videoGame.Category = category;
+                    break;
+                case "C":
+                case "c":
+                    Console.WriteLine("Insert new publication year");
+                    var publicationYear = Console.ReadLine();
+                    videoGame.PublicationYear = this.ConvertStringToInteger(publicationYear);
+                    break;
+                case "D":
+                case "d":
+                    Console.WriteLine("Insert new producer");
+                    var producer = Console.ReadLine();
+                    videoGame.Producer = producer;
+                    break;
+                case "E":
+                case "e":
+                    Console.WriteLine("Insert if online option is available");
+                    var onlineOption = Console.ReadLine();
+                    videoGame.OnlineOption = this.ConvertStringToBoolean(onlineOption);
+                    break;
+                default:
+                    throw new Exception("Wrong letter!");
+            }
+        }
+
+        _videoGameRepository.Save();
+    }
+
     public void RemoveGame()
     {
         Console.WriteLine("Insert game ID");

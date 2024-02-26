@@ -23,8 +23,8 @@ public class GameArchiveLogic : IGameArchiveLogic
     {
         if (typeInput == "1")
         {
-            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game" +
-                              "\nE => Show earliest produced game\nF => Show unique producers\nG => Order by name\nH => Filter by category name");
+            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Update game\nE => Remove Game" +
+                              "\nF => Show earliest produced game\nG => Show unique producers\nH => Order by name\nI => Filter by category name");
             Console.WriteLine();
             var input2 = Console.ReadLine();
 
@@ -45,28 +45,35 @@ public class GameArchiveLogic : IGameArchiveLogic
                     break;
                 case "D":
                 case "d":
-                    _videoGameLogic.RemoveGame();
+                    _videoGameLogic.DisplayAllGames();
+                    Console.WriteLine("Please choose ID number you would like to update.");
+                    var id = Console.ReadLine();
+                    _videoGameLogic.UpdateVideoGame(id);
                     break;
                 case "E":
-                case "e":                    
-                    Console.WriteLine(_videoGameProvider.GetTheEarliestProducedGame());
+                case "e":
+                    _videoGameLogic.RemoveGame();
                     break;
                 case "F":
-                case "f":                    
+                case "f":
+                    Console.WriteLine(_videoGameProvider.GetTheEarliestProducedGame());
+                    break;
+                case "G":
+                case "g":                    
                     foreach(var producer in _videoGameProvider.GetUniqueGameProducer())
                     {
                         Console.WriteLine(producer);
                     }
                     break;
-                case "G":
-                case "g":
+                case "H":
+                case "h":
                     foreach (var game in _videoGameProvider.OrderByName())
                     {
                         Console.WriteLine(game);
                     }
                     break;
-                case "H":
-                case "h":
+                case "I":
+                case "i":
                     string category = Console.ReadLine();
                     foreach (var game in _videoGameProvider.WhereCategoryIs(category))
                     {
@@ -79,8 +86,8 @@ public class GameArchiveLogic : IGameArchiveLogic
         }
         else if(typeInput == "2")
         {
-            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Remove Game" +
-                "\nE => Show earliest produced game\nF => Show unique producers\nG => Order by name\nH => Filter by category name");
+            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Update game\nE => Remove Game" +
+                "\nF => Show earliest produced game\nG => Show unique producers\nH => Order by name\nI => Filter by category name");
             Console.WriteLine();
             var input2 = Console.ReadLine();
             switch (input2)
@@ -99,28 +106,35 @@ public class GameArchiveLogic : IGameArchiveLogic
                     break;
                 case "D":
                 case "d":
-                    _boardGameLogic.RemoveGame();
+                    _boardGameLogic.DisplayAllGames();
+                    Console.WriteLine("Please choose ID number you would like to update.");
+                    var id = Console.ReadLine();
+                    _boardGameLogic.UpdateVideoGame(id);
                     break;
                 case "E":
-                case "e":                   
-                    Console.WriteLine(_boardGameProvider.GetTheEarliestProducedGame());
+                case "e":
+                    _boardGameLogic.RemoveGame();
                     break;
                 case "F":
-                case "f":
+                case "f":                   
+                    Console.WriteLine(_boardGameProvider.GetTheEarliestProducedGame());
+                    break;
+                case "G":
+                case "g":
                     foreach (var producer in _boardGameProvider.GetUniqueGameProducer())
                     {
                         Console.WriteLine(producer);
                     }
                     break;
-                case "G":
-                case "g":
+                case "H":
+                case "h":
                     foreach (var game in _boardGameProvider.OrderByName())
                     {
                         Console.WriteLine(game);
                     }
                     break;
-                case "H":
-                case "h":
+                case "I":
+                case "i":
                     string category = Console.ReadLine();
                     foreach (var game in _boardGameProvider.WhereCategoryIs(category))
                     {

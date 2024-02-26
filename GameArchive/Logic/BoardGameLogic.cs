@@ -51,6 +51,56 @@ public class BoardGameLogic<T> : IGameLogic <T> where T : class
         }
     }
 
+    public void UpdateVideoGame(string id)
+    {
+
+        var boardGame = _boardGameRepository.GetById(this.ConvertStringToInteger(id));
+        Console.WriteLine("=========================================");
+        Console.WriteLine("What would you like to change?");
+        Console.WriteLine("\nA => Name\nB => Category\nC => Publication year\nD => Producer\nE => Online option");
+        var input = Console.ReadLine();
+        if (boardGame != null)
+        {
+            switch (input)
+            {
+                case "A":
+                case "a":
+                    Console.WriteLine("Insert new name");
+                    var name = Console.ReadLine();
+                    boardGame.Name = name;
+                    break;
+                case "B":
+                case "b":
+                    Console.WriteLine("Insert new category");
+                    var category = Console.ReadLine();
+                    boardGame.Category = category;
+                    break;
+                case "C":
+                case "c":
+                    Console.WriteLine("Insert new publication year");
+                    var publicationYear = Console.ReadLine();
+                    boardGame.PublicationYear = this.ConvertStringToInteger(publicationYear);
+                    break;
+                case "D":
+                case "d":
+                    Console.WriteLine("Insert new producer");
+                    var producer = Console.ReadLine();
+                    boardGame.Producer = producer;
+                    break;
+                case "E":
+                case "e":
+                    Console.WriteLine("Insert maximum amout of players");
+                    var maxPlayers = Console.ReadLine();
+                    boardGame.MaxPlayers = this.ConvertStringToInteger(maxPlayers);
+                    break;
+                default:
+                    throw new Exception("Wrong letter!");
+            }
+        }
+
+        _boardGameRepository.Save();
+    }
+
     public void RemoveGame()
     {
         Console.WriteLine("Insert game ID");
@@ -60,6 +110,7 @@ public class BoardGameLogic<T> : IGameLogic <T> where T : class
         _boardGameRepository.Remove(boardGame);
         _boardGameRepository.Save();
     }
+
     public Boolean ConvertStringToBoolean(string input)
     {
         if (input == "yes")
