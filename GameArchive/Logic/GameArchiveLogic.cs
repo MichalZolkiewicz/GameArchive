@@ -1,4 +1,5 @@
 ﻿using GameArchive.Data.DataProvider;
+using GameArchive.Data.DataProvider.Extension;
 using GameArchive.Data.Entities;
 
 namespace GameArchive.Logic;
@@ -19,127 +20,89 @@ public class GameArchiveLogic : IGameArchiveLogic
         _videoGameLogic = videoGameLogic;
         _boardGameLogic = boardGameLogic;
     }
-    public void ChooseActionAndRepository(string typeInput)
+    public void ChooseRepository(string gameChoice)
     {
-        if (typeInput == "1")
+        if (gameChoice == "1")
         {
-            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Update game\nE => Remove Game" +
-                              "\nF => Show earliest produced game\nG => Show unique producers\nH => Order by name\nI => Filter by category name");
-            Console.WriteLine();
-            var input2 = Console.ReadLine();
-
-
-            switch (input2)
+            var actionChoice = this.ChooseAction();
+            switch (actionChoice)
             {
                 case "A":
-                case "a":
                     _videoGameLogic.AddGame();
                     break;
                 case "B":
-                case "b":
                     _videoGameLogic.DisplayGameById();
                     break;
                 case "C": 
-                case "c":
                     _videoGameLogic.DisplayAllGames();
                     break;
                 case "D":
-                case "d":
                     _videoGameLogic.DisplayAllGames();
                     Console.WriteLine("Please choose ID number you would like to update.");
                     var id = Console.ReadLine();
-                    _videoGameLogic.UpdateVideoGame(id);
+                    _videoGameLogic.UpdateGame(id);
                     break;
                 case "E":
-                case "e":
                     _videoGameLogic.RemoveGame();
                     break;
                 case "F":
-                case "f":
                     Console.WriteLine(_videoGameProvider.GetTheEarliestProducedGame());
                     break;
                 case "G":
-                case "g":                    
-                    foreach(var producer in _videoGameProvider.GetUniqueGameProducer())
-                    {
-                        Console.WriteLine(producer);
-                    }
+                    var producers = _videoGameProvider.GetUniqueGameProducer();
+                    GameProviderExtension.DisplayUniqueGameProducers(producers);
                     break;
                 case "H":
-                case "h":
-                    foreach (var game in _videoGameProvider.OrderByName())
-                    {
-                        Console.WriteLine(game);
-                    }
+                    var orderedGames = _videoGameProvider.OrderByName();
+                    GameProviderExtension.DisplayGamesOrderedByName(orderedGames);
                     break;
                 case "I":
-                case "i":
                     string category = Console.ReadLine();
-                    foreach (var game in _videoGameProvider.WhereCategoryIs(category))
-                    {
-                        Console.WriteLine(game);
-                    }
+                    var games = _videoGameProvider.WhereCategoryIs(category);
+                    GameProviderExtension.DisplayGamesWhereCategoryIs(games);
                     break;
                 default:
                     throw new Exception("Wrong letter!");
             }
         }
-        else if(typeInput == "2")
+        else if(gameChoice == "2")
         {
-            Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Update game\nE => Remove Game" +
-                "\nF => Show earliest produced game\nG => Show unique producers\nH => Order by name\nI => Filter by category name");
-            Console.WriteLine();
-            var input2 = Console.ReadLine();
-            switch (input2)
+            var actionChoice = this.ChooseAction();
+            switch (actionChoice)
             {
                 case "A":
-                case "a":
                     _boardGameLogic.AddGame();
                     break;
                 case "B":
-                case "b":
                     _boardGameLogic.DisplayGameById();
                     break;
                 case "C":
-                case "c":
                     _boardGameLogic.DisplayAllGames();
                     break;
                 case "D":
-                case "d":
                     _boardGameLogic.DisplayAllGames();
                     Console.WriteLine("Please choose ID number you would like to update.");
                     var id = Console.ReadLine();
-                    _boardGameLogic.UpdateVideoGame(id);
+                    _boardGameLogic.UpdateGame(id);
                     break;
                 case "E":
-                case "e":
                     _boardGameLogic.RemoveGame();
                     break;
                 case "F":
-                case "f":                   
                     Console.WriteLine(_boardGameProvider.GetTheEarliestProducedGame());
                     break;
                 case "G":
-                case "g":
-                    foreach (var producer in _boardGameProvider.GetUniqueGameProducer())
-                    {
-                        Console.WriteLine(producer);
-                    }
+                    var producers = _boardGameProvider.GetUniqueGameProducer();
+                    GameProviderExtension.DisplayUniqueGameProducers(producers);
                     break;
                 case "H":
-                case "h":
-                    foreach (var game in _boardGameProvider.OrderByName())
-                    {
-                        Console.WriteLine(game);
-                    }
+                    var orderedGames = _boardGameProvider.OrderByName();
+                    GameProviderExtension.DisplayGamesOrderedByName(orderedGames);
                     break;
                 case "I":
-                case "i":
                     string category = Console.ReadLine();
-                    foreach (var game in _boardGameProvider.WhereCategoryIs(category))
-                    {
-                        Console.WriteLine(game);
-                    }
+                    var games = _boardGameProvider.WhereCategoryIs(category);
+                    GameProviderExtension.DisplayGamesWhereCategoryIs(games);
                     break;
                 default:
                     throw new Exception("Wrong letter!");
@@ -149,6 +112,15 @@ public class GameArchiveLogic : IGameArchiveLogic
         {
             throw new Exception("Wrong number!");
         }
+    }
+
+    public string ChooseAction()
+    {
+        Console.WriteLine("\nChoose action:\nA => Add game\nB => Display game\nC => Display all games\nD => Update game\nE => Remove Game" +
+                              "\nF => Show earliest produced game\nG => Show unique producers\nH => Order by name\nI => Filter by category name");
+        Console.WriteLine();
+        var actionChoice = Console.ReadLine().ToUpper();
+        return actionChoice;
     }
 }
                

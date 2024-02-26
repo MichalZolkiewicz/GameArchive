@@ -2,5 +2,5 @@
 
 public interface IGameArchiveLogic
 {
-    void ChooseActionAndRepository(string input);
+    void ChooseRepository(string input);
 }

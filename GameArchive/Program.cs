@@ -16,8 +16,8 @@ services.AddSingleton<IRepository<BoardGame>, SqlRepository<BoardGame>>();
 services.AddSingleton<IGameProvider<VideoGame>, VideoGameProvider>();
 services.AddSingleton<IGameProvider<BoardGame>, BoardGameProvider>();
 services.AddSingleton<IGameArchiveLogic, GameArchiveLogic>();
-services.AddSingleton<IGameLogic<VideoGame>, VideoGameLogic<VideoGame>>();
-services.AddSingleton<IGameLogic<BoardGame>, BoardGameLogic<BoardGame>>();
+services.AddSingleton<IGameLogic<VideoGame>, VideoGameLogic>();
+services.AddSingleton<IGameLogic<BoardGame>, BoardGameLogic>();
 
 services.AddDbContext<GameArchiveDbContext>();
 

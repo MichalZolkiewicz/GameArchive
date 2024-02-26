@@ -1,6 +1,4 @@
-﻿using GameArchive.Data.DataProvider;
-using GameArchive.Data.Entities;
-using GameArchive.Logic;
+﻿using GameArchive.Logic;
 
 namespace GameArchive.UserCommuniation;
 
@@ -28,7 +26,7 @@ public class UserCommunication : IUserCommunication
 
             try
             {
-                _gameArchiveLogic.ChooseActionAndRepository(input);
+                _gameArchiveLogic.ChooseRepository(input);
             }
             catch (Exception e)
             {

@@ -1,6 +1,4 @@
 ﻿using GameArchive.Data;
-using GameArchive.Data.DataProvider;
-using GameArchive.Data.Entities;
 using GameArchive.UserCommuniation;
 
 namespace GameArchive;

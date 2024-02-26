@@ -7,5 +7,5 @@ public interface IGameLogic<T> where T : class
     void DisplayAllGames();
     void RemoveGame();
 
-    void UpdateVideoGame(string id);
+    void UpdateGame(string id);
 }
