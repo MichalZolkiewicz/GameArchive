@@ -1,4 +1,4 @@
-﻿namespace GameArchive.Data.DataProvider.Extension;
+﻿namespace GameArchive.ApplicationServices.DataProvider.Extension;
 
 public static class GameProviderExtension
 {

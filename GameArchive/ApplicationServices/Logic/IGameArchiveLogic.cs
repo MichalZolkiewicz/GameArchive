@@ -1,4 +1,4 @@
-﻿namespace GameArchive.Logic;
+﻿namespace GameArchive.ApplicationServices.Logic;
 
 public interface IGameArchiveLogic
 {

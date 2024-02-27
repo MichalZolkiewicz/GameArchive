@@ -1,8 +1,8 @@
-﻿namespace GameArchive.Logic.Extension;
+﻿namespace GameArchive.ApplicationServices.Logic.Extension;
 
 public static class GameLogicExtension
 {
-    public static Boolean ConvertStringToBoolean(string input)
+    public static bool ConvertStringToBoolean(string input)
     {
         if (input == "yes")
         {

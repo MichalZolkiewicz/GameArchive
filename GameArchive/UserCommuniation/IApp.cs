@@ -1,4 +1,4 @@
-﻿namespace GameArchive;
+﻿namespace GameArchive.UserCommuniation;
 
 public interface IApp
 {

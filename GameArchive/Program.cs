@@ -1,9 +1,8 @@
-﻿using GameArchive;
+﻿using GameArchive.ApplicationServices.DataProvider;
+using GameArchive.ApplicationServices.Logic;
 using GameArchive.Data;
-using GameArchive.Data.DataProvider;
 using GameArchive.Data.Entities;
 using GameArchive.Data.Repositories;
-using GameArchive.Logic;
 using GameArchive.UserCommuniation;
 using Microsoft.Extensions.DependencyInjection;
 

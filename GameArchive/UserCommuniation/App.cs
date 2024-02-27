@@ -1,7 +1,6 @@
 ﻿using GameArchive.Data;
-using GameArchive.UserCommuniation;
 
-namespace GameArchive;
+namespace GameArchive.UserCommuniation;
 
 public class App : IApp
 {

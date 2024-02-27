@@ -1,8 +1,8 @@
-﻿using GameArchive.Data.DataProvider;
-using GameArchive.Data.DataProvider.Extension;
+﻿using GameArchive.ApplicationServices.DataProvider;
+using GameArchive.ApplicationServices.DataProvider.Extension;
 using GameArchive.Data.Entities;
 
-namespace GameArchive.Logic;
+namespace GameArchive.ApplicationServices.Logic;
 
 public class GameArchiveLogic : IGameArchiveLogic
 {
@@ -24,7 +24,7 @@ public class GameArchiveLogic : IGameArchiveLogic
     {
         if (gameChoice == "1")
         {
-            var actionChoice = this.ChooseAction();
+            var actionChoice = ChooseAction();
             switch (actionChoice)
             {
                 case "A":
@@ -33,7 +33,7 @@ public class GameArchiveLogic : IGameArchiveLogic
                 case "B":
                     _videoGameLogic.DisplayGameById();
                     break;
-                case "C": 
+                case "C":
                     _videoGameLogic.DisplayAllGames();
                     break;
                 case "D":
@@ -65,9 +65,9 @@ public class GameArchiveLogic : IGameArchiveLogic
                     throw new Exception("Wrong letter!");
             }
         }
-        else if(gameChoice == "2")
+        else if (gameChoice == "2")
         {
-            var actionChoice = this.ChooseAction();
+            var actionChoice = ChooseAction();
             switch (actionChoice)
             {
                 case "A":
@@ -123,4 +123,3 @@ public class GameArchiveLogic : IGameArchiveLogic
         return actionChoice;
     }
 }
-               

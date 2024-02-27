@@ -1,17 +1,17 @@
-﻿using GameArchive.Data.Entities;
+﻿using GameArchive.ApplicationServices.Logic.Extension;
+using GameArchive.Data.Entities;
 using GameArchive.Data.Repositories;
-using GameArchive.Logic.Extension;
 
-namespace GameArchive.Logic;
+namespace GameArchive.ApplicationServices.Logic;
 
-public class VideoGameLogic : IGameLogic<VideoGame>
+public class BoardGameLogic : IGameLogic<BoardGame>
 {
-    private readonly IRepository<VideoGame> _videoGameRepository;
+    private readonly IRepository<BoardGame> _boardGameRepository;
     private readonly IEventLoggerLogic _eventLoggerLogic;
 
-    public VideoGameLogic(IRepository<VideoGame> videoGameRepository, IEventLoggerLogic eventLoggerLogic)
+    public BoardGameLogic(IRepository<BoardGame> boardGameRepository, IEventLoggerLogic eventLoggerLogic)
     {
-        _videoGameRepository = videoGameRepository;
+        _boardGameRepository = boardGameRepository;
         _eventLoggerLogic = eventLoggerLogic;
     }
 
@@ -25,84 +25,85 @@ public class VideoGameLogic : IGameLogic<VideoGame>
         var gamePublicationYear = GameLogicExtension.ConvertStringToInteger(Console.ReadLine());
         Console.WriteLine("Insert producer");
         var gameProducer = Console.ReadLine();
-        Console.WriteLine("Insert if there is online option");
-        var hasOnlineOption = GameLogicExtension.ConvertStringToBoolean(Console.ReadLine());
-        VideoGame videoGame = new VideoGame { Name = gameName, Category = gameCategory, PublicationYear = gamePublicationYear, Producer = gameProducer, OnlineOption = hasOnlineOption };
+        Console.WriteLine("Insert maximum amount of players");
+        var maxPlayers = GameLogicExtension.ConvertStringToInteger(Console.ReadLine());
+        BoardGame boardGame = new BoardGame { Name = gameName, Category = gameCategory, PublicationYear = gamePublicationYear, Producer = gameProducer, MaxPlayers = maxPlayers };
 
-        _videoGameRepository.ItemAdded += _eventLoggerLogic.GameRepositoryOnItemAdded;
-        _videoGameRepository.Add(videoGame);
-        _videoGameRepository.Save();
+        _boardGameRepository.ItemAdded += _eventLoggerLogic.GameRepositoryOnItemAdded;
+        _boardGameRepository.Add(boardGame);
+        _boardGameRepository.Save();
     }
 
     public void DisplayGameById()
     {
         Console.WriteLine("Insert game ID");
         var gameId = GameLogicExtension.ConvertStringToInteger(Console.ReadLine());
-        VideoGame videoGame = _videoGameRepository.GetById(gameId);
-        Console.WriteLine(videoGame.Name);
+        BoardGame boardGame = _boardGameRepository.GetById(gameId);
+        Console.WriteLine(boardGame.Name);
     }
 
     public void DisplayAllGames()
     {
-        var videoGames = _videoGameRepository.GetAll();
-        foreach (var videoGame in videoGames)
+        var boardGames = _boardGameRepository.GetAll();
+        foreach (var boardGame in boardGames)
         {
-            Console.WriteLine(videoGame);
+            Console.WriteLine(boardGame);
             Console.WriteLine();
         }
     }
 
     public void UpdateGame(string id)
     {
-        var videoGame = _videoGameRepository.GetById(GameLogicExtension.ConvertStringToInteger(id));
+
+        var boardGame = _boardGameRepository.GetById(GameLogicExtension.ConvertStringToInteger(id));
         Console.WriteLine("=========================================");
         Console.WriteLine("What would you like to change?");
         Console.WriteLine("\nA => Name\nB => Category\nC => Publication year\nD => Producer\nE => Online option");
         var input = Console.ReadLine().ToUpper();
-        if (videoGame != null)
+        if (boardGame != null)
         {
             switch (input)
             {
                 case "A":
                     Console.WriteLine("Insert new name");
                     var name = Console.ReadLine();
-                    videoGame.Name = name;
+                    boardGame.Name = name;
                     break;
                 case "B":
                     Console.WriteLine("Insert new category");
                     var category = Console.ReadLine();
-                    videoGame.Category = category;
+                    boardGame.Category = category;
                     break;
                 case "C":
                     Console.WriteLine("Insert new publication year");
                     var publicationYear = Console.ReadLine();
-                    videoGame.PublicationYear = GameLogicExtension.ConvertStringToInteger(publicationYear);
+                    boardGame.PublicationYear = GameLogicExtension.ConvertStringToInteger(publicationYear);
                     break;
                 case "D":
                     Console.WriteLine("Insert new producer");
                     var producer = Console.ReadLine();
-                    videoGame.Producer = producer;
+                    boardGame.Producer = producer;
                     break;
                 case "E":
-                    Console.WriteLine("Insert if online option is available");
-                    var onlineOption = Console.ReadLine();
-                    videoGame.OnlineOption = GameLogicExtension.ConvertStringToBoolean(onlineOption);
+                    Console.WriteLine("Insert maximum amout of players");
+                    var maxPlayers = Console.ReadLine();
+                    boardGame.MaxPlayers = GameLogicExtension.ConvertStringToInteger(maxPlayers);
                     break;
                 default:
                     throw new Exception("Wrong letter!");
             }
         }
 
-        _videoGameRepository.Save();
+        _boardGameRepository.Save();
     }
 
     public void RemoveGame()
     {
         Console.WriteLine("Insert game ID");
         var gameId = GameLogicExtension.ConvertStringToInteger(Console.ReadLine());
-        VideoGame videoGame = _videoGameRepository.GetById(gameId);
-        _videoGameRepository.ItemRemoved += _eventLoggerLogic.GameRepositoryOnItemRemoved;
-        _videoGameRepository.Remove(videoGame);
-        _videoGameRepository.Save();
+        BoardGame boardGame = _boardGameRepository.GetById(gameId);
+        _boardGameRepository.ItemRemoved += _eventLoggerLogic.GameRepositoryOnItemRemoved;
+        _boardGameRepository.Remove(boardGame);
+        _boardGameRepository.Save();
     }
 }

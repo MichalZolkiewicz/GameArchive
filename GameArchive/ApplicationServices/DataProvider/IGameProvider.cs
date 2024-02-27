@@ -1,6 +1,6 @@
-﻿namespace GameArchive.Data.DataProvider;
+﻿namespace GameArchive.ApplicationServices.DataProvider;
 
-public interface IGameProvider<T> 
+public interface IGameProvider<T>
     where T : class
 {
     List<string> GetUniqueGameProducer();

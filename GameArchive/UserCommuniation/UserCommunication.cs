@@ -1,4 +1,4 @@
-﻿using GameArchive.Logic;
+﻿using GameArchive.ApplicationServices.Logic;
 
 namespace GameArchive.UserCommuniation;
 

@@ -1,7 +1,7 @@
 ﻿using GameArchive.Data.Entities;
 using GameArchive.Data.Repositories;
 
-namespace GameArchive.Data.DataProvider;
+namespace GameArchive.ApplicationServices.DataProvider;
 
 public class BoardGameProvider : IGameProvider<BoardGame>
 {
