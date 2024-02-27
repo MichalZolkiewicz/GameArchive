@@ -57,6 +57,7 @@ public class GameArchiveLogic : IGameArchiveLogic
                     GameProviderExtension.DisplayGamesOrderedByName(orderedGames);
                     break;
                 case "I":
+                    Console.WriteLine("Please insert category");
                     string category = Console.ReadLine();
                     var games = _videoGameProvider.WhereCategoryIs(category);
                     GameProviderExtension.DisplayGamesWhereCategoryIs(games);
@@ -100,6 +101,7 @@ public class GameArchiveLogic : IGameArchiveLogic
                     GameProviderExtension.DisplayGamesOrderedByName(orderedGames);
                     break;
                 case "I":
+                    Console.WriteLine("Please insert category");
                     string category = Console.ReadLine();
                     var games = _boardGameProvider.WhereCategoryIs(category);
                     GameProviderExtension.DisplayGamesWhereCategoryIs(games);

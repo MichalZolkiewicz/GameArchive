@@ -14,7 +14,7 @@ public class UserCommunication : IUserCommunication
     {
         while (true)
         {
-            Console.WriteLine("Welcome to game archive application!");
+            Console.WriteLine("\nWelcome to game archive application!");
             Console.WriteLine("\nChoose game type:\n1 => Video Game, 2 => Board Game\nTo quit press Q");
             Console.WriteLine();
             var input = Console.ReadLine();

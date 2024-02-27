@@ -39,7 +39,15 @@ public class BoardGameLogic : IGameLogic<BoardGame>
         Console.WriteLine("Insert game ID");
         var gameId = GameLogicExtension.ConvertStringToInteger(Console.ReadLine());
         BoardGame boardGame = _boardGameRepository.GetById(gameId);
-        Console.WriteLine(boardGame.Name);
+        if (boardGame != null)
+        {
+            Console.WriteLine(boardGame.Name);
+
+        }
+        else
+        {
+            throw new Exception("Id number does not exist!");
+        }
     }
 
     public void DisplayAllGames()
@@ -93,7 +101,7 @@ public class BoardGameLogic : IGameLogic<BoardGame>
                     throw new Exception("Wrong letter!");
             }
         }
-
+        Console.WriteLine($"Game with Id: {id} updated");
         _boardGameRepository.Save();
     }
 
@@ -102,8 +110,16 @@ public class BoardGameLogic : IGameLogic<BoardGame>
         Console.WriteLine("Insert game ID");
         var gameId = GameLogicExtension.ConvertStringToInteger(Console.ReadLine());
         BoardGame boardGame = _boardGameRepository.GetById(gameId);
-        _boardGameRepository.ItemRemoved += _eventLoggerLogic.GameRepositoryOnItemRemoved;
-        _boardGameRepository.Remove(boardGame);
-        _boardGameRepository.Save();
+        if (boardGame != null)
+        {
+            _boardGameRepository.ItemRemoved += _eventLoggerLogic.GameRepositoryOnItemRemoved;
+            _boardGameRepository.Remove(boardGame);
+            _boardGameRepository.Save();
+            Console.WriteLine($"Game with Id: {gameId} removed");
+        }
+        else
+        {
+            throw new Exception("Id number does not exist!");
+        }   
     }
 }

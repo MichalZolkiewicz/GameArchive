@@ -22,7 +22,7 @@ public static class GameProviderExtension
     {
         foreach (var game in games)
         {
-            Console.WriteLine(game);
+            Console.WriteLine($"\n{game}");
         }
     }
 }

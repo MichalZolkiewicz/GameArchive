@@ -39,7 +39,15 @@ public class VideoGameLogic : IGameLogic<VideoGame>
         Console.WriteLine("Insert game ID");
         var gameId = GameLogicExtension.ConvertStringToInteger(Console.ReadLine());
         VideoGame videoGame = _videoGameRepository.GetById(gameId);
-        Console.WriteLine(videoGame.Name);
+        if(videoGame != null)
+        {
+            Console.WriteLine(videoGame.Name);
+
+        }
+        else
+        {
+            throw new Exception("Id number does not exist!");
+        }
     }
 
     public void DisplayAllGames()
@@ -92,7 +100,7 @@ public class VideoGameLogic : IGameLogic<VideoGame>
                     throw new Exception("Wrong letter!");
             }
         }
-
+        Console.WriteLine($"Game with Id: {id} updated");
         _videoGameRepository.Save();
     }
 
@@ -101,8 +109,17 @@ public class VideoGameLogic : IGameLogic<VideoGame>
         Console.WriteLine("Insert game ID");
         var gameId = GameLogicExtension.ConvertStringToInteger(Console.ReadLine());
         VideoGame videoGame = _videoGameRepository.GetById(gameId);
-        _videoGameRepository.ItemRemoved += _eventLoggerLogic.GameRepositoryOnItemRemoved;
-        _videoGameRepository.Remove(videoGame);
-        _videoGameRepository.Save();
+
+        if (videoGame != null) 
+        {
+            _videoGameRepository.ItemRemoved += _eventLoggerLogic.GameRepositoryOnItemRemoved;
+            _videoGameRepository.Remove(videoGame);
+            _videoGameRepository.Save();
+            Console.WriteLine($"Game with Id: {gameId} removed");
+        }
+        else
+        {
+            throw new Exception("Id number does not exist!");
+        }        
     }
 }
