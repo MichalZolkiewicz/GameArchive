@@ -3,7 +3,7 @@ using GameArchive.ApplicationServices.Logic;
 using GameArchive.Data;
 using GameArchive.Data.Entities;
 using GameArchive.Data.Repositories;
-using GameArchive.UserCommuniation;
+using GameArchive.UserCommunication;
 using Microsoft.Extensions.DependencyInjection;
 
 var services = new ServiceCollection();
